@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Personal Website</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .profile-image {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(45deg, #9c27b0, #673ab7);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: white;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .profile-info h1 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .profile-info p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: linear-gradient(45deg, #8e24aa, #5e35b1);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(45deg, #9c27b0, #673ab7);
+        }
+
+        .nav-btn.active {
+            background: linear-gradient(45deg, #ab47bc, #7e57c2);
+            transform: translateY(-1px);
+        }
+
+        .content {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section h2 {
+            color: #6a1b9a;
+            font-size: 2.2rem;
+            margin-bottom: 25px;
+            text-align: center;
+            position: relative;
+        }
+
+        .section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #8e24aa, #5e35b1);
+            border-radius: 2px;
+        }
+
+        .interests-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .interest-card {
+            background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(156, 39, 176, 0.2);
+        }
+
+        .interest-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(156, 39, 176, 0.3);
+        }
+
+        .interest-card h3 {
+            color: #6a1b9a;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+
+        .interest-card p {
+            color: #4a148c;
+            line-height: 1.6;
+        }
+
+        .website-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .website-item {
+            background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+            padding: 20px;
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(156, 39, 176, 0.2);
+        }
+
+        .website-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(156, 39, 176, 0.3);
+        }
+
+        .website-item h3 {
+            color: #6a1b9a;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .website-item p {
+            color: #4a148c;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .website-link {
+            display: inline-block;
+            background: linear-gradient(45deg, #8e24aa, #5e35b1);
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .interest-card .website-link {
+            display: inline-block;
+            background: linear-gradient(45deg, #8e24aa, #5e35b1);
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .interest-card .website-link:hover {
+            background: linear-gradient(45deg, #9c27b0, #673ab7);
+            transform: translateY(-1px);
+        }
+
+        .main-welcome {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .main-welcome h2 {
+            color: #6a1b9a;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .main-welcome p {
+            color: #4a148c;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #e1bee7 0%, #f3e5f5 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #8e24aa;
+        }
+
+        @media (max-width: 768px) {
+            .profile {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .profile-info h1 {
+                font-size: 2rem;
+            }
+
+            .content {
+                padding: 25px;
+            }
+
+            .section h2 {
+                font-size: 1.8rem;
+            }
+
+            .interests-grid {
+                grid-template-columns: 1fr;
+            }
+
+        .memo-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        #memoArea {
+            width: 100%;
+            padding: 20px;
+            border: 2px solid #e1bee7;
+            border-radius: 15px;
+            font-size: 1rem;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 400px;
+            background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);
+            color: #4a148c;
+            line-height: 1.6;
+        }
+
+        #memoArea:focus {
+            outline: none;
+            border-color: #8e24aa;
+            box-shadow: 0 0 10px rgba(142, 36, 170, 0.3);
+        }
+
+        .memo-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+
+        .memo-btn {
+            background: linear-gradient(45deg, #8e24aa, #5e35b1);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .memo-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .clear-btn {
+            background: linear-gradient(45deg, #d32f2f, #c62828);
+        }
+
+        .clear-btn:hover {
+            background: linear-gradient(45deg, #e53935, #d32f2f);
+        }
+
+        .password-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .password-content {
+            background: white;
+            margin: 15% auto;
+            padding: 40px;
+            border-radius: 20px;
+            width: 400px;
+            max-width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .password-content h3 {
+            color: #6a1b9a;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .password-input {
+            width: 200px;
+            padding: 12px;
+            border: 2px solid #e1bee7;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            text-align: center;
+            margin: 20px 0;
+            letter-spacing: 0.5em;
+        }
+
+        .password-input:focus {
+            outline: none;
+            border-color: #8e24aa;
+            box-shadow: 0 0 10px rgba(142, 36, 170, 0.3);
+        }
+
+        .password-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .password-btn {
+            background: linear-gradient(45deg, #8e24aa, #5e35b1);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .password-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .cancel-btn {
+            background: linear-gradient(45deg, #757575, #616161);
+        }
+
+        .cancel-btn:hover {
+            background: linear-gradient(45deg, #9e9e9e, #757575);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="profile">
+                <div class="profile-image">👾</div>
+                <div class="profile-info">
+                    <h1>안녕하세요!</h1>
+                    <p>저의 개인 웹페이지에 오신 것을 환영합니다.<br>
+                    다양한 관심사와 취미를 가진 사람입니다.</p>
+                </div>
+            </div>
+            
+            <nav>
+                <button class="nav-btn active" onclick="showSection('home')">메인 화면</button>
+                <button class="nav-btn" onclick="showSection('schedule')">학사 일정 및 계획</button>
+                <button class="nav-btn" onclick="showSection('websites')">즐겨 찾는 웹사이트</button>
+                <button class="nav-btn" onclick="showSection('games')">내가 만든 게임이로다</button>
+            </nav>
+        </header>
+
+        <div class="content">
+            <section id="home" class="section active">
+                <div class="main-welcome">
+                    <h2>환영합니다!</h2>
+                    <p>이곳에서 김지우의 취미생활을 엿볼 수 있음ㅋ</p>
+                    
+                    <div class="highlight">
+                        <h3 style="color: #6a1b9a; margin-bottom: 15px;">최근 업데이트</h3>
+                        <p style="color: #4a148c;">새로운 취미를 추가했습니다! 다양한 활동들을 통해 더 풍부한 일상을 만들어가고 있습니다.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="schedule" class="section">
+                <h2>학사 일정 및 계획</h2>
+                <div class="memo-container">
+                    <textarea id="memoArea" placeholder="여기에 학사 일정과 계획을 자유롭게 작성해보세요...&#10;&#10;예시:&#10;- 중간고사 일정&#10;- 과제 마감일&#10;- 방학 계획&#10;- 수강 신청 일정&#10;- 기타 중요한 일정들" rows="15"></textarea>
+                    <div class="memo-buttons">
+                        <button onclick="saveMemo()" class="memo-btn">저장하기</button>
+                        <button onclick="clearMemo()" class="memo-btn clear-btn">지우기</button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="websites" class="section">
+                <h2>즐겨 찾는 웹사이트</h2>
+                <div class="website-list">
+                    <div class="website-item">
+                        <h3>GitHub</h3>
+                        <p>개발 프로젝트를 관리하고 오픈소스 코드를 탐색하는 곳입니다.</p>
+                        <a href="https://github.com" class="website-link" target="_blank">방문하기</a>
+                    </div>
+                    <div class="website-item">
+                        <h3>Dribbble</h3>
+                        <p>디자인 영감을 얻고 다른 디자이너들의 작품을 감상하는 플랫폼입니다.</p>
+                        <a href="https://dribbble.com" class="website-link" target="_blank">방문하기</a>
+                    </div>
+                    <div class="website-item">
+                        <h3>Medium</h3>
+                        <p>다양한 주제의 글을 읽고 지식을 공유하는 플랫폼입니다.</p>
+                        <a href="https://medium.com" class="website-link" target="_blank">방문하기</a>
+                    </div>
+                    <div class="website-item">
+                        <h3>TED</h3>
+                        <p>영감을 주는 강연과 아이디어를 접할 수 있는 곳입니다.</p>
+                        <a href="https://ted.com" class="website-link" target="_blank">방문하기</a>
+                    </div>
+                    <div class="website-item">
+                        <h3>Spotify</h3>
+                        <p>음악을 듣고 새로운 곡을 발견하는 음악 스트리밍 서비스입니다.</p>
+                        <a href="https://spotify.com" class="website-link" target="_blank">방문하기</a>
+                    </div>
+                    <div class="website-item">
+                        <h3>Coursera</h3>
+                        <p>온라인으로 다양한 강의를 수강하여 새로운 기술을 배우는 곳입니다.</p>
+                        <a href="https://coursera.org" class="website-link" target="_blank">방문하기</a>
+                    </div>
+                </div>
+            </section>
+
+            <section id="games" class="section">
+                <h2>내가 만든 게임이로다</h2>
+                <div class="interests-grid">
+                    <div class="interest-card">
+                        <h3>⚗원소기호 맞추기 게임💜</h3>
+                        <p>화학 원소 기호를 맞추는 재미있는 퀴즈 게임입니다. 다양한 원소들의 기호를 맞춰보세요!</p>
+                        <button onclick="playGame()" class="website-link">게임 시작하기</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- 비밀번호 모달 -->
+    <div id="passwordModal" class="password-modal">
+        <div class="password-content">
+            <h3>🔐 게임 접속</h3>
+            <p style="color: #6a1b9a; margin-bottom: 20px;">비밀번호를 입력해주세요</p>
+            <input type="password" id="passwordInput" class="password-input" maxlength="4" placeholder="****">
+            <div class="password-buttons">
+                <button onclick="checkPassword()" class="password-btn">확인</button>
+                <button onclick="closePasswordModal()" class="password-btn cancel-btn">취소</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 메모장 관련 함수들
+        function saveMemo() {
+            const memoContent = document.getElementById('memoArea').value;
+            // 메모 내용을 메모리에 저장 (실제로는 서버나 로컬 저장소에 저장해야 함)
+            alert('메모가 저장되었습니다!');
+        }
+
+        function clearMemo() {
+            if (confirm('메모를 모두 지우시겠습니까?')) {
+                document.getElementById('memoArea').value = '';
+            }
+        }
+
+        // 게임 접속 관련 함수들
+        function playGame() {
+            document.getElementById('passwordModal').style.display = 'block';
+            document.getElementById('passwordInput').focus();
+        }
+
+        function closePasswordModal() {
+            document.getElementById('passwordModal').style.display = 'none';
+            document.getElementById('passwordInput').value = '';
+        }
+
+        function checkPassword() {
+            const password = document.getElementById('passwordInput').value;
+            if (password === '0503') {
+                closePasswordModal();
+                // 실제 게임 파일을 열기 위해 새 창을 열거나 현재 창에서 이동
+                window.open('element_quiz_game.html', '_blank');
+            } else {
+                alert('비밀번호가 틀렸습니다!');
+                document.getElementById('passwordInput').value = '';
+                document.getElementById('passwordInput').focus();
+            }
+        }
+
+        // 엔터키로 비밀번호 확인
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter' && document.getElementById('passwordModal').style.display === 'block') {
+                checkPassword();
+            }
+        });
+
+        function showSection(sectionId) {
+            // 모든 섹션 숨기기
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // 모든 버튼 비활성화
+            const buttons = document.querySelectorAll('.nav-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // 선택된 섹션 보이기
+            document.getElementById(sectionId).classList.add('active');
+
+            // 클릭된 버튼 활성화
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>
